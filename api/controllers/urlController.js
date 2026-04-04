@@ -4,6 +4,11 @@ const Url = require("../models/Url");
 // create short url
 exports.shortenUrl = async (req, res) => {
     try{
+        // if production version then return proper shortened url
+        let isProductionVersion = process.env.RELEASE_VERSON === "PRODUCTION";
+
+        const baseUrl = isProductionVersion ? process.env.BACKEND_SERVER_URL_PROD : process.env.BACKEND_SERVER_URL_LOCAL;
+
         const { originalUrl, createdBy  } = req.body;
 
         const randomWord = generateRandomWord();
@@ -14,7 +19,8 @@ exports.shortenUrl = async (req, res) => {
             createdBy
         });
 
-        res.status(201).json({ message: `http://localhost:6969/pptiny/${randomWord}` });
+        res.status(200).json({ message: `${baseUrl}/pptiny/${randomWord}` });
+
     }catch(err){
         res.status(400).json({ message: err.message });
     }
@@ -25,15 +31,11 @@ exports.Redirecter = async (req, res) => {
     try {
         const { shortenCode } = req.params;
 
-        console.log(shortenCode)
-
         const urlDoc = await Url.findOne({ shortenedUrl: shortenCode });
 
         if (!urlDoc) {
             return res.status(404).json({ message: "URL not found" });
         }
-
-        console.log(urlDoc);
 
         // Redirect to original URL
         return res.redirect(urlDoc.originalUrl);

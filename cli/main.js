@@ -1,7 +1,15 @@
+#!/usr/bin/env node
+require("dotenv").config();
+
 const { Command } = require("commander");
 const fs = require('fs');
 const path = require("path");
 const os = require("os");
+
+// is dev version or prod version
+const is_production = process.env.RELEASE_VERSON === "PRODUCTION";
+
+let baseUrl = is_production ? process.env.BACKEND_SERVER_URL_PROD : process.env.BACKEND_SERVER_URL_LOCAL;
 
 const program = new Command();
 
@@ -15,7 +23,7 @@ const url = program.command("url").description("Shorten URL");
 async function registerFnc({ username, email, password }) {
     // call register endppoint
     try{
-        const res = await fetch("http://localhost:6969/api/v1/pptiny/user/register", {
+        const res = await fetch(`${baseUrl}/api/v1/pptiny/user/register`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
@@ -39,7 +47,7 @@ async function registerFnc({ username, email, password }) {
 // login function
 async function loginFnc({username, password}){
     try{
-        const res = await fetch("http://localhost:6969/api/v1/pptiny/user/login", {
+        const res = await fetch(`${baseUrl}/api/v1/pptiny/user/login`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
@@ -68,10 +76,8 @@ async function loginFnc({username, password}){
 
 // shorten url function
 async function shortenUrlFnc({ url }){
-    console.log(url);
-
     try{
-        const res = await fetch("http://localhost:6969/pptiny/shorten", {
+        const res = await fetch(`${baseUrl}/pptiny/shorten`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -126,3 +132,5 @@ url
   });
 
 program.parse();
+
+// node main.js url short <url>

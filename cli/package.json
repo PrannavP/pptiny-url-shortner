@@ -1,5 +1,9 @@
 {
+  "name": "pptiny-url-shortener",
+  "version": "1.0.0",
+  "bin": "main.js",
   "dependencies": {
-    "commander": "^14.0.3"
+    "commander": "^14.0.3",
+    "dotenv": "^17.4.0"
   }
 }
