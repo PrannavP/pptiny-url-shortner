@@ -1,6 +1,6 @@
 // main  entry point of the api
 
-require("dotenv").config();
+require("dotenv").config({ debug: false });
 const app = require("./app");
 const connectDB = require("./config/db");
 

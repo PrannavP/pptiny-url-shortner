@@ -5,6 +5,7 @@ const { Command } = require("commander");
 const fs = require('fs');
 const path = require("path");
 const os = require("os");
+const clipboardy = require("clipboardy").default;
 
 // is dev version or prod version
 const is_production = process.env.RELEASE_VERSON === "PRODUCTION";
@@ -86,6 +87,10 @@ async function shortenUrlFnc({ url }){
         });
 
         const data = await res.json();
+
+        // copy the url in clipboard
+        await clipboardy.writeSync(data.message);
+        
         console.log(`Shortened URL: ${data.message}`);
     }catch(err){
         console.log("Error", err);

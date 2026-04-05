@@ -29,6 +29,7 @@ exports.shortenUrl = async (req, res) => {
 // redirecter
 exports.Redirecter = async (req, res) => {
     try {
+        console.log(req);
         const { shortenCode } = req.params;
 
         const urlDoc = await Url.findOne({ shortenedUrl: shortenCode });
