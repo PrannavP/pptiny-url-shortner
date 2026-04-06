@@ -55,8 +55,6 @@ async function loginFnc({username, password}){
 
 // shorten url function
 async function shortenUrlFnc({ url }){
-    console.log(url);
-
     try{
         const res = await fetch("http://localhost:6969/pptiny/shorten", {
             method: "POST",
