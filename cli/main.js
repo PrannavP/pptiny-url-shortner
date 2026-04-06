@@ -8,7 +8,7 @@ const os = require("os");
 const clipboardy = require("clipboardy").default;
 
 // is dev version or prod version
-const is_production = process.env.RELEASE_VERSON === "PRODUCTION";
+const is_production = process.env.RELEASE_VERSION === "PRODUCTION";
 
 let baseUrl = is_production ? process.env.BACKEND_SERVER_URL_PROD : process.env.BACKEND_SERVER_URL_LOCAL;
 
