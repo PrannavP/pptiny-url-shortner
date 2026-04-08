@@ -1,9 +1,13 @@
 const generateRandomWord = require("../utils/generateRandomWords");
 const Url = require("../models/Url");
+const rateLimiterHelper = require("../utils/rateLimiterHelper");
 
 // create short url
 exports.shortenUrl = async (req, res) => {
     try{
+        // get ip address of the request (for rate limiting)
+        await rateLimiterHelper(req);
+
         // if production version then return proper shortened url
         let isProductionVersion = process.env.RELEASE_VERSON === "PRODUCTION";
 

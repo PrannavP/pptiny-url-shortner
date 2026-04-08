@@ -1,8 +1,17 @@
 const express = require("express");
+const cors = require("cors");
 
 const app = express();
 
-// middleware
+// Middleware
+app.use(cors({
+    origin: [
+        'http://localhost:3000'
+    ],
+    methods: ['GET', 'POST'],
+    allowedHeaders: ['Content-Type']
+}));
+
 app.use(express.json());
 
 // routes
